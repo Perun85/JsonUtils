@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Title>JSON document migrations based on System.Text.Json</Title>
+    <Description>Library built on top of the System.Text.Json that allows you to upgrade JSON object schemas using database like migrations</Description>
+    <PackageProjectUrl>https://github.com/Perun85/JsonUtils</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(SolutionDir)docs\LICENSE.md" Pack="true" PackagePath="" />
+    <None Include="$(SolutionDir)docs\README.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+  
+</Project>

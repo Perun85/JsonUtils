@@ -1,0 +1,33 @@
+name: Publish libraries
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        configuration: [Release]
+    runs-on: windows-latest  
+    env:
+      Solution_Name: Perun85.JsonUtils.sln                         
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Install .NET Core
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+    
+    - name: Pack Perun85.JsonUtils.Migrations
+      run: dotnet pack src\libs\Perun85.JsonUtils.Migrations\Perun85.JsonUtils.Migrations.csproj -c Release
+    
+    - name: Publish to NuGet.org
+      run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}} -SkipDuplicate

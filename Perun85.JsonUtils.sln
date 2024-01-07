@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Perun85.JsonUtils.Migrations", "src\libs\Perun85.JsonUtils.Migrations\Perun85.JsonUtils.Migrations.csproj", "{74DE212F-8760-47E3-A8A6-4936331E3695}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Perun85.JsonUtils.Migrations.UnitTests", "src\tests\Perun85.JsonUtils.Migrations.UnitTests\Perun85.JsonUtils.Migrations.UnitTests.csproj", "{DE880CB1-99AE-4D51-99BF-B23183B28D1E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Perun85.JsonUtils.Migrations.IntegrationTests", "src\tests\Perun85.JsonUtils.Migrations.IntegrationTests\Perun85.JsonUtils.Migrations.IntegrationTests.csproj", "{DB8587A2-BDA0-481A-BF38-1AF043A3D24E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{E8A67044-67A0-45C9-9DEF-A753BE02FD24}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0DEEE896-E1D5-4B48-9DE8-7BA2356D4960}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{74DE212F-8760-47E3-A8A6-4936331E3695}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74DE212F-8760-47E3-A8A6-4936331E3695}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74DE212F-8760-47E3-A8A6-4936331E3695}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74DE212F-8760-47E3-A8A6-4936331E3695}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE880CB1-99AE-4D51-99BF-B23183B28D1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE880CB1-99AE-4D51-99BF-B23183B28D1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE880CB1-99AE-4D51-99BF-B23183B28D1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE880CB1-99AE-4D51-99BF-B23183B28D1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB8587A2-BDA0-481A-BF38-1AF043A3D24E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB8587A2-BDA0-481A-BF38-1AF043A3D24E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB8587A2-BDA0-481A-BF38-1AF043A3D24E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB8587A2-BDA0-481A-BF38-1AF043A3D24E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{74DE212F-8760-47E3-A8A6-4936331E3695} = {E8A67044-67A0-45C9-9DEF-A753BE02FD24}
+		{DE880CB1-99AE-4D51-99BF-B23183B28D1E} = {0DEEE896-E1D5-4B48-9DE8-7BA2356D4960}
+		{DB8587A2-BDA0-481A-BF38-1AF043A3D24E} = {0DEEE896-E1D5-4B48-9DE8-7BA2356D4960}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {32CB0F4A-F233-4072-ADAC-0A9369880005}
+	EndGlobalSection
+EndGlobal
