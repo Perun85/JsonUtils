@@ -6,8 +6,6 @@
     <AssemblyVersion>1.0.0</AssemblyVersion>
     <FileVersion>1.0.0</FileVersion>
     <InformationalVersion>1.0.0</InformationalVersion>
-    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/Perun85/JsonUtils</RepositoryUrl>
     <PackageTags>JSON utilities, JSON migrations, migration, database like migration, System.Text.Json migrations, JSON versioning, JSON document migrations, JSON versioning</PackageTags>
     <Copyright>$(Authors)</Copyright>	
