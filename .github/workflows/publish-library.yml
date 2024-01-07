@@ -26,7 +26,10 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 8.0.x
-    
+
+    - name: Run tests
+      run: dotnet test Perun85.JsonUtils.sln
+
     - name: Pack Perun85.JsonUtils.Migrations
       run: dotnet pack src\libs\Perun85.JsonUtils.Migrations\Perun85.JsonUtils.Migrations.csproj -c Release
     
