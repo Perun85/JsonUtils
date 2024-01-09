@@ -49,8 +49,9 @@ internal sealed class JsonMigrationEngine : IJsonMigrationEngine
         if (!orderedMigrations.Exists(x => x.VersionInfo.Initial == documentInitialVersion))
             throw new NoApplicableMigrationsFoundException($"Document '{documentId}' with version '{documentInitialVersion}' has no applicable migrations.");
 
-        foreach (var migration in orderedMigrations)
-            documentJsonNode = ApplyMigrationIfVersionsMatch(migration, _versionPropertyName, documentJsonNode!, _serializationOptions);
+        var potentiallyApplicableMigrations = orderedMigrations.Where(x => x.VersionInfo.Initial >= documentInitialVersion).ToList();
+
+        potentiallyApplicableMigrations.ForEach(x => documentJsonNode = ApplyMigration(x, _versionPropertyName, documentJsonNode, _serializationOptions));
 
         return new JsonMigrationResult
         {
@@ -60,12 +61,12 @@ internal sealed class JsonMigrationEngine : IJsonMigrationEngine
         };
     }
 
-    private static JsonNode ApplyMigrationIfVersionsMatch(IJsonMigration migration, string versionPropertyName, JsonNode documentNode, JsonMigrationSerializationOptions serializationOptions)
+    private static JsonNode ApplyMigration(IJsonMigration migration, string versionPropertyName, JsonNode documentNode, JsonMigrationSerializationOptions serializationOptions)
     {
         var documentVersion = documentNode.GetDocumentVersion(versionPropertyName);
 
         if (documentVersion != migration.VersionInfo.Initial)
-            throw new ApplyingIncompatibleMigrationException($"Attempting to apply migration '{migration.VersionInfo.Initial}' on the document with incompatible version '{documentVersion}'.");
+            return documentNode;
         
         try
         {

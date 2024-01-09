@@ -8,7 +8,7 @@ namespace Perun85.JsonUtils.Migrations.IntegrationTests;
 public sealed class JsonMigrationEngineTests
 {
     [TestMethod]
-    public void Apply_WhenValidJsonAndValidMigrationsAreSupplied_ShouldMigrateSuccessfully()
+    public void ApplyMigrations_WhenValidJsonAndValidMigrationsAreSupplied_ShouldMigrateSuccessfully()
     {
         var engine = new JsonMigrationEngineBuilder()
             .WithSerializationOptions(Constants.Serialization.Options)
@@ -23,7 +23,7 @@ public sealed class JsonMigrationEngineTests
     }
 
     [TestMethod]
-    public void Apply_WhenThereAreNoApplicableMigrationsForInitialDocumentVersion_ShouldThrowNoApplicableMigrationFoundException()
+    public void ApplyMigrations_WhenThereAreNoApplicableMigrationsForInitialDocumentVersion_ShouldThrowNoApplicableMigrationFoundException()
     {
         var engine = new JsonMigrationEngineBuilder()
             .WithMigration(new Migration_1_2())
@@ -36,7 +36,7 @@ public sealed class JsonMigrationEngineTests
     }
 
     [TestMethod]
-    public void Apply_WhenDocumentIsOnVersionHigherThanAnyRegisteredMigration_ShouldNotMigrate()
+    public void ApplyMigrations_WhenDocumentIsOnVersionHigherThanAnyRegisteredMigration_ShouldNotMigrate()
     {
         var engine = new JsonMigrationEngineBuilder()
             .WithMigration(new Migration_0_1())
@@ -53,7 +53,7 @@ public sealed class JsonMigrationEngineTests
     [TestMethod]
     [DataRow(null)]
     [DataRow("")]
-    public void Apply_WhenArgumentDocumentIdIsMissing_ShouldThrowArgumentException(string documentId)
+    public void ApplyMigrations_WhenArgumentDocumentIdIsMissing_ShouldThrowArgumentException(string documentId)
     {
         var engine = new JsonMigrationEngineBuilder()
             .WithMigration(new Migration_0_1())
@@ -70,7 +70,7 @@ public sealed class JsonMigrationEngineTests
     [TestMethod]
     [DataRow(null)]
     [DataRow("")]
-    public void Apply_WhenArgumentCurrentDocumentContentIsNullOrEmptyString_ShouldThrowStringNullOrEmptyArgException(string documentContent)
+    public void ApplyMigrations_WhenArgumentCurrentDocumentContentIsNullOrEmptyString_ShouldThrowStringNullOrEmptyArgException(string documentContent)
     {
         var engine = new JsonMigrationEngineBuilder()
             .WithMigration(new Migration_0_1())
@@ -82,7 +82,7 @@ public sealed class JsonMigrationEngineTests
     }
 
     [TestMethod]
-    public void Apply_WhenDocumentContentDoesNotContainVersionProperty_ShouldThrowVersionPropertyNotFoundException()
+    public void ApplyMigrations_WhenDocumentContentDoesNotContainVersionProperty_ShouldThrowVersionPropertyNotFoundException()
     {
         var engine = new JsonMigrationEngineBuilder()
             .WithMigration(new Migration_0_1())
@@ -95,7 +95,7 @@ public sealed class JsonMigrationEngineTests
     }
 
     [TestMethod]
-    public void Apply_WhenCustomVersionPropertyIsUsed_ShouldMigrateSuccessfully()
+    public void ApplyMigrations_WhenCustomVersionPropertyIsUsed_ShouldMigrateSuccessfully()
     {
         var engine = new JsonMigrationEngineBuilder()
             .WithSerializationOptions(Constants.Serialization.Options)
@@ -111,7 +111,7 @@ public sealed class JsonMigrationEngineTests
     }
 
     [TestMethod]
-    public void Apply_WhenCustomSerializationOptionsAreSupplied_ShouldApplyThemDuringMigration()
+    public void ApplyMigrations_WhenCustomSerializationOptionsAreSupplied_ShouldApplyThemDuringMigration()
     {
         var engine = new JsonMigrationEngineBuilder()
             .WithMigration(new Migration_0_1())
@@ -126,7 +126,7 @@ public sealed class JsonMigrationEngineTests
     }
 
     [TestMethod]
-    public void Apply_WhenMultipleMigrationsAreRegistered_ShouldBeAppliedCorrectly()
+    public void ApplyMigrations_WhenMultipleMigrationsAreRegistered_ShouldBeAppliedCorrectly()
     {
         var engine = new JsonMigrationEngineBuilder()
             .WithSerializationOptions(Constants.Serialization.Options)
@@ -142,7 +142,7 @@ public sealed class JsonMigrationEngineTests
     }
 
     [TestMethod]
-    public void Apply_WhenDocumentIsAlreadyAtHighestRegisteredVersion_ShouldNotApplyMigrations()
+    public void ApplyMigrations_WhenDocumentIsAlreadyAtHighestRegisteredVersion_ShouldNotApplyMigrations()
     {
         var engine = new JsonMigrationEngineBuilder()
             .WithSerializationOptions(Constants.Serialization.Options)
@@ -158,7 +158,23 @@ public sealed class JsonMigrationEngineTests
     }
 
     [TestMethod]
-    public void Apply_WhenMigrationThrowsException_ShouldThrowErrorApplyingMigrationExceptionWithInnerExceptionPropertySetToOriginalOne()
+    public void ApplyMigrations_WhenOnlySubsetOfRegisteredMigrationsNeedsToBeApplied_ShouldMigrateDocumentCorrectly()
+    {
+        var engine = new JsonMigrationEngineBuilder()
+           .WithSerializationOptions(Constants.Serialization.Options)
+           .WithMigration(new Migration_0_1())
+           .WithMigration(new Migration_1_2())
+           .Build();
+
+        var migrationResult = engine.ApplyMigrations(Constants.Document.Id, Constants.Document.Content.SuccessfullyMigratedToVersion1);
+
+        Assert.AreEqual((uint)2, migrationResult.CurrentDocumentVersion);
+        Assert.AreEqual(Constants.Document.Content.SuccessfullyMigratedToVersion2, migrationResult.DocumentContent);
+        Assert.IsTrue(migrationResult.IsDocumentMigrated);
+    }
+
+    [TestMethod]
+    public void ApplyMigrations_WhenMigrationThrowsException_ShouldThrowErrorApplyingMigrationExceptionWithInnerExceptionPropertySetToOriginalOne()
     {
         var engine = new JsonMigrationEngineBuilder()
             .WithMigration(new MigrationWithException())

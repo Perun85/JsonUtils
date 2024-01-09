@@ -27,9 +27,6 @@ public interface IJsonMigrationEngine
     /// Throw when the engine experiences an error during application of the migration.
     /// Exception caused by migration is placed inside the <see cref="Exception.InnerException"/> property.
     /// </exception>
-    /// <exception cref="MigrationRangeOverlappingException">
-    /// Thrown when registering migration who's range is overlapping with the already registered one.
-    /// </exception>
     /// <exception cref="VersionPropertyNotFoundException">
     /// Throw when document does not contain property with information of its current version.
     /// </exception>
