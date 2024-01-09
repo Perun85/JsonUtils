@@ -1,4 +1,5 @@
-﻿#if !NET8_0_OR_GREATER
+﻿using JsonMigrator.Utils;
+#if !NET8_0_OR_GREATER
 using System.Runtime.Serialization;
 #endif
 
@@ -30,4 +31,10 @@ public sealed class NoApplicableMigrationsFoundException : Exception
     {
     }
     #endif
+
+    internal static void Throw(string documentId, uint documentInitialVersion)
+    {
+        Arg.Guard.AgainstStringNullOrEmpty(documentId);
+        throw new NoApplicableMigrationsFoundException($"Document '{documentId}' with version '{documentInitialVersion}' has no applicable migrations.");
+    }
 }

@@ -29,4 +29,6 @@ public sealed class MigrationRangeOverlappingException : Exception
     {
     }
     #endif
+
+    internal static void Throw() => throw new MigrationRangeOverlappingException("Range overlaps with already registered migration.");
 }

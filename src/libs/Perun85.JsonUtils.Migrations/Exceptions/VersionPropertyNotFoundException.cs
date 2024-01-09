@@ -1,4 +1,5 @@
-﻿#if !NET8_0_OR_GREATER
+﻿using JsonMigrator.Utils;
+#if !NET8_0_OR_GREATER
 using System.Runtime.Serialization;
 #endif
 
@@ -29,4 +30,10 @@ public sealed class VersionPropertyNotFoundException : Exception
     {
     }
     #endif
+
+    internal static void Throw(string versionPropertyName)
+    {
+        Arg.Guard.AgainstStringNullOrEmpty(versionPropertyName);
+        throw new VersionPropertyNotFoundException($"Version property '{versionPropertyName}' not found.");
+    }
 }

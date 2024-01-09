@@ -32,10 +32,9 @@ internal sealed class JsonMigrationEngine : IJsonMigrationEngine
         var documentHasVersionProperty = documentJsonNode[_versionPropertyName] is not null;
 
         if (!documentHasVersionProperty)
-            throw new VersionPropertyNotFoundException($"Version property '{_versionPropertyName}' not found.");
+            VersionPropertyNotFoundException.Throw(_versionPropertyName);
 
         var documentInitialVersion = documentJsonNode.GetDocumentVersion(_versionPropertyName);
-
         var isDocumentAlreadyAtHighestVersion = orderedMigrations[orderedMigrations.Count - 1].VersionInfo.Initial < documentInitialVersion;
 
         if (isDocumentAlreadyAtHighestVersion)
@@ -47,7 +46,7 @@ internal sealed class JsonMigrationEngine : IJsonMigrationEngine
             };
 
         if (!orderedMigrations.Exists(x => x.VersionInfo.Initial == documentInitialVersion))
-            throw new NoApplicableMigrationsFoundException($"Document '{documentId}' with version '{documentInitialVersion}' has no applicable migrations.");
+            NoApplicableMigrationsFoundException.Throw(documentId, documentInitialVersion);
 
         var potentiallyApplicableMigrations = orderedMigrations.Where(x => x.VersionInfo.Initial >= documentInitialVersion).ToList();
 
@@ -72,11 +71,12 @@ internal sealed class JsonMigrationEngine : IJsonMigrationEngine
         {
             migration.Apply(documentNode, serializationOptions);
             documentNode.SetDocumentVersion(versionPropertyName, migration.VersionInfo.Final);
-            return documentNode;
         }
         catch (Exception ex)
         {
-            throw new ErrorApplyingMigrationException($"Failed to apply migration '{migration.GetType().FullName}'.", ex);
+            ErrorApplyingMigrationException.Throw(migration.GetType().FullName!, ex);
         }
+        
+        return documentNode;
     }
 }

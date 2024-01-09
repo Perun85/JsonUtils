@@ -19,10 +19,6 @@ public interface IJsonMigrationEngine
     /// This does not apply to the situation where document is already at version that is higher or equal to the one of highest registered migration. 
     /// In that case property <see cref="JsonMigrationResult.IsDocumentMigrated"/> will be set to <see cref="false"/> and unmodified document content and current version will be returned.
     /// </exception>
-    /// <exception cref="ApplyingIncompatibleMigrationException">
-    /// Thrown when engine tries to apply migration on the document with incompatible version.
-    /// Appearance of this exception indicates there is a bug in the engine.
-    /// </exception>
     /// <exception cref="ErrorApplyingMigrationException">
     /// Throw when the engine experiences an error during application of the migration.
     /// Exception caused by migration is placed inside the <see cref="Exception.InnerException"/> property.

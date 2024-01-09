@@ -14,7 +14,7 @@ internal sealed class JsonMigrationRegistry : IJsonMigrationRegistry
         var orderedMigrations = (this as IJsonMigrationRegistry).GetOrderedMigrations(migration.DocumentId);
 
         if (orderedMigrations.Exists(registeredMigration => registeredMigration.VersionInfo.RangeOverlaps(migration.VersionInfo)))
-            throw new MigrationRangeOverlappingException("Range overlaps with already registered migration.");
+            MigrationRangeOverlappingException.Throw();
         
         _migrations.Add(migration);
     }
